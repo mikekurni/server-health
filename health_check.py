@@ -2,18 +2,17 @@ import os
 import time
 import requests
 from deta import Deta
-from dotenv import load_dotenv
 
-# Load environment variables from Github Secrets
+# Deta Base setup
 DETA_PROJECT_KEY = os.getenv('DETA_PROJECT_KEY')
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 
-# Deta Base setup
+# Initialize Deta Base
 deta = Deta(DETA_PROJECT_KEY)
 db = deta.Base('server_health')
 
 def fetch_url():
-    response = requests.get('http://93days.me')
+    response = requests.get('https://kimulti.kitrans.my.id/login')
     status_code = response.status_code
     response_time = response.elapsed.total_seconds()
     data = {
@@ -25,7 +24,7 @@ def fetch_url():
     if status_code == 200 and response_time < 3:
         print(f'The status code: {status_code}, Response time: {response_time}')
     else:
-        print(f'Huston, we are in trouble!')
+        print(f'We are in trouble Houston')
         send_alert(f'Problem detected! Status code: {status_code}, Response time: {response_time}')
 
 def send_alert(message):
@@ -36,4 +35,5 @@ def send_alert(message):
     if response.status_code != 204:
         print(f'Failed to send alert: {response.status_code}, {response.text}')
 
+# Run health check immediately
 fetch_url()
