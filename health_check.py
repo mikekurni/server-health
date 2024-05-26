@@ -1,11 +1,8 @@
 import os
 import time
-from urllib import response
 import requests
 from deta import Deta
 from dotenv import load_dotenv
-
-from server_health_dashboard import DETA_PROJECT_KEY, DISCORD_WEBHOOK_URL, send_alert
 
 # Load environment variables from Github Secrets
 DETA_PROJECT_KEY = os.getenv('DETA_PROJECT_KEY')
