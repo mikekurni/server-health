@@ -1,7 +1,6 @@
 import os
 import requests
 from deta import Deta
-import time
 
 # Deta Base setup
 DETA_PROJECT_KEY = os.getenv('DETA_PROJECT_KEY')
@@ -35,10 +34,5 @@ def send_alert(message):
     if response.status_code != 204:
         print(f'Failed to send alert: {response.status_code}, {response.text}')
 
-def run_health_checks(interval=300):
-    while True:
-        fetch_url()
-        time.sleep(interval)
-
 if __name__ == "__main__":
-    run_health_checks()
+    fetch_url()
