@@ -2,7 +2,7 @@ name: Server Health Check
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   health-check:
