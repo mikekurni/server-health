@@ -21,11 +21,16 @@ def fetch_url():
         'response_time': response_time
     }
     db.put(data)
-    if status_code == 200 and response_time < 3:
-        print(f'The status code: {status_code}, Response time: {response_time}')
+    
+    if status_code == 200 or status_code == 204:
+        if response_time > 3:
+            message = f":yellow_square: Status Code: {status_code} with Response Time {response_time:.2f}s. Not meet the standard server health (above 3s)."
+            send_alert(message)
     else:
-        print(f'We are in trouble Huston')
-        send_alert(f'Problem detected! Status code: {status_code}, Response time: {response_time}')
+        message = f":red_square: Huston we've problem! Status Code {status_code} - Response Time {response_time:.2f}s. Website couldn't be reach. Kindly check and monitor if the problem persist."
+        send_alert(message)
+    
+    print(f'Status code: {status_code}, Response time: {response_time:.2f}s')
 
 def send_alert(message):
     payload = {
