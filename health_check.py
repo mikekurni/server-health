@@ -1,3 +1,4 @@
+from email import message
 import os
 import time
 import requests
@@ -21,14 +22,19 @@ def fetch_url():
         'response_time': response_time
     }
     db.put(data)
-    
-    if status_code == 200 or status_code == 204:
-        if response_time > 3:
-            message = f":yellow_square: Status Code: {status_code} with Response Time {response_time:.2f}s. Not meet the standard server health (above 3s)."
-            send_alert(message)
-    else:
-        message = f":red_square: Huston we've problem! Status Code {status_code} - Response Time {response_time:.2f}s. Website couldn't be reach. Kindly check and monitor if the problem persist."
+
+    if status_code != 200 or status_code != 204:
+        message = f":red_square: Huston we've problem! Status Code {status_code} - Response Time {response_time:.2f}s. Website couldn't be reach. Kindly check and monitor if the problem persist.
+
         send_alert(message)
+    
+    # if status_code == 200 or status_code == 204:
+        # if response_time > 3:
+        #     message = f":yellow_square: Status Code: {status_code} with Response Time {response_time:.2f}s. Not meet the standard server health (above 3s)."
+    #         send_alert(message)
+    # else:
+    #     message = f":red_square: Huston we've problem! Status Code {status_code} - Response Time {response_time:.2f}s. Website couldn't be reach. Kindly check and monitor if the problem persist."
+    #     send_alert(message)
     
     print(f'Status code: {status_code}, Response time: {response_time:.2f}s')
 
